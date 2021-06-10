@@ -84,7 +84,7 @@ public class meteorScript : MonoBehaviour {
             }
             if (Current == Sequence.Count()) {
                 StartCoroutine(YouFuckedUp());
-            } else {
+            } else if (Current < Sequence.Count()) {
                 Number.text = Sequence[Current].ToString();
                 OtherNumber.text = (Current+1).ToString();
             }
@@ -110,8 +110,65 @@ public class meteorScript : MonoBehaviour {
             Debug.LogFormat("[Meteor #{0}] You submitted just before the trap card. That is correct. Module solved.", moduleId);
         } else {
             GetComponent<KMBombModule>().HandleStrike();
-            Debug.LogFormat("[Meteor #{0}] You submitted in the wrong spot (Card #{1}), strike!", moduleId, Current);
+            Debug.LogFormat("[Meteor #{0}] You submitted in the wrong spot (Card #{1}), strike!", moduleId, Current + 1);
         }
     }
 
+    //twitch plays
+    #pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} previous/prev [Goes to the previous card in the deck] | !{0} next [Goes to the next card in the deck] | !{0} submit [Presses the call button]";
+    #pragma warning restore 414
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        if (Regex.IsMatch(command, @"^\s*submit\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            Call.OnInteract();
+            yield break;
+        }
+        string[] parameters = command.Split(' ');
+        if (Regex.IsMatch(parameters[0], @"^\s*previous\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant) || Regex.IsMatch(parameters[0], @"^\s*prev\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            if (parameters.Length == 1)
+            {
+                if (Current == 0)
+                {
+                    yield return "sendtochaterror There is no previous card before the first card!";
+                    yield break;
+                }
+                Cards[0].OnInteract();
+            }
+            else if (parameters.Length > 1)
+            {
+                yield return "sendtochaterror Too many parameters!";
+            }
+            yield break;
+        }
+        if (Regex.IsMatch(parameters[0], @"^\s*next\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            if (parameters.Length == 1)
+            {
+                Cards[1].OnInteract();
+                if (Current == Sequence.Count())
+                    yield return "strike";
+            }
+            else if (parameters.Length > 1)
+            {
+                yield return "sendtochaterror Too many parameters!";
+            }
+            yield break;
+        }
+    }
+
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        while (Current != Sequence.Count() - 1)
+        {
+            Cards[1].OnInteract();
+            yield return new WaitForSeconds(0.1f);
+        }
+        Call.OnInteract();
+    }
 }

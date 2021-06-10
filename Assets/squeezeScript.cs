@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using KModkit;
 
 public class squeezeScript : MonoBehaviour {
 
     public KMBombInfo Bomb;
     public KMAudio Audio;
+    public KMSelectable Module;
     public KMSelectable[] Buttons;
     public TextMesh[] Texts;
     public Color[] Colors; //white, selected, halve, double, green
@@ -31,7 +29,6 @@ public class squeezeScript : MonoBehaviour {
     //Logging
     static int moduleIdCounter = 1;
     int moduleId;
-    private bool moduleSolved;
 
     void Awake () {
         moduleId = moduleIdCounter++;
@@ -39,8 +36,6 @@ public class squeezeScript : MonoBehaviour {
         foreach (KMSelectable button in Buttons) {
             button.OnInteract += delegate () { buttonPress(button); return false; };
         }
-
-
     }
 
     // Use this for initialization
@@ -166,6 +161,12 @@ public class squeezeScript : MonoBehaviour {
             GetComponent<KMBombModule>().HandlePass();
             Debug.LogFormat("[Squeeze #{0}] Number is a single digit. Module solved.", moduleId);
         }
+        KMSelectable[] btns = new KMSelectable[numberstring.Length];
+        for (int i = 0; i < btns.Length; i++)
+            btns[i] = Buttons[i];
+        Module.Children = btns;
+        Module.ChildRowLength = numberstring.Length;
+        Module.UpdateChildren(Module);
     }
 
     private IEnumerator Blink(int x) {
@@ -180,4 +181,65 @@ public class squeezeScript : MonoBehaviour {
         yield return null;
     }
 
+    //twitch plays
+    #pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} press <pos> (pos2)... [Presses the button(s) in the specified position(s)] | !{0} press <pink/blue> [Presses pink or blue if the selected sub-number is a single digit] | Valid positions are 1-9 from left to right";
+    #pragma warning restore 414
+    IEnumerator ProcessTwitchCommand(string command)
+    {
+        string[] parameters = command.Split(' ');
+        if (Regex.IsMatch(parameters[0], @"^\s*press\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            if (parameters.Length == 1)
+            {
+                yield return "sendtochaterror Please specify at least one position of a button to press!";
+            }
+            else if (parameters.Length > 1)
+            {
+                for (int i = 1; i < parameters.Length; i++)
+                {
+                    int temp = 0;
+                    if (!int.TryParse(parameters[i], out temp))
+                    {
+                        if (parameters[i].ToLower().EqualsAny("pink", "blue"))
+                            continue;
+                        yield return "sendtochaterror!f The specified position '" + parameters[i] + "' is invalid!";
+                        yield break;
+                    }
+                    if (temp < 1 || temp > 9)
+                    {
+                        yield return "sendtochaterror!f The specified position '" + parameters[i] + "' is out of range 1-9!";
+                        yield break;
+                    }
+                }
+                for (int i = 1; i < parameters.Length; i++)
+                {
+                    if (parameters[i].ToLower().EqualsAny("blue", "pink"))
+                    {
+                        if (state != 3)
+                        {
+                            yield return "sendtochaterror Press " + i + " cannot be performed as a button is not toggling between pink and blue!";
+                            yield break;
+                        }
+                        if (parameters[i].EqualsIgnoreCase("pink"))
+                            while (blinkingnumberstate != 0) yield return null;
+                        else
+                            while (blinkingnumberstate != 1) yield return null;
+                        Buttons[seconddigitchosen].OnInteract();
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    else if (int.Parse(parameters[i]) > numberstring.Length)
+                    {
+                        yield return "sendtochaterror Press " + i + " cannot be performed as the button in the position '" + int.Parse(parameters[i]) + "' is not present!";
+                        yield break;
+                    }
+                    else
+                    {
+                        Buttons[int.Parse(parameters[i]) - 1].OnInteract();
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                }
+            }
+        }
+    }
 }

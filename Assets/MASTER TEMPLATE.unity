@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44658017, g: 0.49641502, b: 0.57482153, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -120,6 +120,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114139553842080666, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+        type: 2}
+      propertyPath: Children.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4257340207950476, guid: 46ad86bce701bfa4c8d78dce3f61d228, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.2
@@ -155,6 +160,36 @@ Prefab:
     - target: {fileID: 1676409040304040, guid: 46ad86bce701bfa4c8d78dce3f61d228, type: 2}
       propertyPath: m_Name
       value: Meteor
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139553842080666, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+        type: 2}
+      propertyPath: Children.Array.data[0]
+      value: 
+      objectReference: {fileID: 1872710289}
+    - target: {fileID: 114139553842080666, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+        type: 2}
+      propertyPath: Children.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139553842080666, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+        type: 2}
+      propertyPath: Children.Array.data[2]
+      value: 
+      objectReference: {fileID: 2012279395}
+    - target: {fileID: 114139553842080666, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+        type: 2}
+      propertyPath: Children.Array.data[3]
+      value: 
+      objectReference: {fileID: 789882080}
+    - target: {fileID: 114139553842080666, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+        type: 2}
+      propertyPath: IsPassThrough
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139553842080666, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+        type: 2}
+      propertyPath: ChildRowLength
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46ad86bce701bfa4c8d78dce3f61d228, type: 2}
@@ -305,6 +340,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &789882080 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114754983324146120, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+    type: 2}
+  m_PrefabInternal: {fileID: 117772403}
+  m_Script: {fileID: 1702003387, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
 --- !u!1001 &1562445881
 Prefab:
   m_ObjectHideFlags: 0
@@ -351,6 +392,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85a2c623b85c45f4fbcbd5bedc7a4b15, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1872710289 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114634932879619366, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+    type: 2}
+  m_PrefabInternal: {fileID: 117772403}
+  m_Script: {fileID: 1702003387, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
 --- !u!1001 &2006525007
 Prefab:
   m_ObjectHideFlags: 0
@@ -398,7 +445,7 @@ Prefab:
     - target: {fileID: 114848120511536268, guid: 8814ea52310d2614a9feda02ec355ae4,
         type: 2}
       propertyPath: TwitchPlaysActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114848120511536268, guid: 8814ea52310d2614a9feda02ec355ae4,
         type: 2}
@@ -428,3 +475,9 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8814ea52310d2614a9feda02ec355ae4, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &2012279395 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114243860677337488, guid: 46ad86bce701bfa4c8d78dce3f61d228,
+    type: 2}
+  m_PrefabInternal: {fileID: 117772403}
+  m_Script: {fileID: 1702003387, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
