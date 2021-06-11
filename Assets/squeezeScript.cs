@@ -7,7 +7,6 @@ public class squeezeScript : MonoBehaviour {
 
     public KMBombInfo Bomb;
     public KMAudio Audio;
-    public KMSelectable Module;
     public KMSelectable[] Buttons;
     public TextMesh[] Texts;
     public Color[] Colors; //white, selected, halve, double, green
@@ -161,12 +160,6 @@ public class squeezeScript : MonoBehaviour {
             GetComponent<KMBombModule>().HandlePass();
             Debug.LogFormat("[Squeeze #{0}] Number is a single digit. Module solved.", moduleId);
         }
-        KMSelectable[] btns = new KMSelectable[numberstring.Length];
-        for (int i = 0; i < btns.Length; i++)
-            btns[i] = Buttons[i];
-        Module.Children = btns;
-        Module.ChildRowLength = numberstring.Length;
-        Module.UpdateChildren(Module);
     }
 
     private IEnumerator Blink(int x) {
