@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 114139553842080666}
   - component: {fileID: 114884711142860296}
   m_Layer: 0
-  m_Name: Me
+  m_Name: Meteor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1084,11 +1084,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Parent: {fileID: 0}
   Children:
+  - {fileID: 114634932879619366}
+  - {fileID: 0}
   - {fileID: 114243860677337488}
   - {fileID: 114754983324146120}
-  - {fileID: 114634932879619366}
   IsPassThrough: 0
-  ChildRowLength: 0
+  ChildRowLength: 2
   Highlight: {fileID: 114570430299588062}
   SelectableColliders: []
   DefaultSelectableIndex: 0

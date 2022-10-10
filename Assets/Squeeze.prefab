@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 114139553842080666}
   - component: {fileID: 114562489256465608}
   m_Layer: 0
-  m_Name: Sq
+  m_Name: Squeeze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2189,7 +2189,7 @@ MonoBehaviour:
   - {fileID: 114801492275645230}
   - {fileID: 114910107023061812}
   IsPassThrough: 0
-  ChildRowLength: 0
+  ChildRowLength: 9
   Highlight: {fileID: 114570430299588062}
   SelectableColliders: []
   DefaultSelectableIndex: 0
@@ -2443,7 +2443,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bomb: {fileID: 114454383462897410}
   Audio: {fileID: 114915473299363512}
-  Module: {fileID: 114139553842080666}
   Buttons:
   - {fileID: 114246002714027998}
   - {fileID: 114128092403767074}
